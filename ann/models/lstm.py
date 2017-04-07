@@ -23,7 +23,6 @@ class Lstm(BaseConfiguration):
 
         self.model.add(Dense(1))
         self.model.compile(loss='mean_squared_error', optimizer=config.optimizer)
-        self.model.summary()
 
     def __str__(self):
         return "lstm-{}".format(self.topology)
