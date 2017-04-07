@@ -20,7 +20,7 @@ class FeedForward(BaseConfiguration):
         self.model.summary()
 
     def __str__(self):
-        return f"dense-{self.topology}"
+        return "dense-{}".format(self.topology)
 
     def reshape(self, x):
         return np.reshape(x, (x.shape[0], x.shape[1]))

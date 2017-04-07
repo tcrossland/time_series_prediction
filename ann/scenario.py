@@ -18,7 +18,7 @@ class Config:
         self.optimizer = optimizer
 
     def __str__(self):
-        return f"w{self.look_back}-e{self.epochs}-b{self.batch_size}"
+        return "w{}-e{}-b{}".format(self.look_back, self.epochs, self.batch_size)
 
 
 class Scenario:
@@ -59,7 +59,7 @@ class Scenario:
         for plot in [self.dataset, self.create_left_plot(train_predict), self.create_right_plot(test_predict)]:
             plt.plot(plot)
 
-        filename = f"../out/{self.time_series}/{self.model}-{self.config}.png"
+        filename = "../out/{}/{}-{}.png".format(self.time_series, self.model, self.config)
 
         plt.savefig(filename)
         plt.close()

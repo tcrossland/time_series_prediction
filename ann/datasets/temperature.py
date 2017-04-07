@@ -17,4 +17,4 @@ class Temperature(TimeSeries):
         return self.dataset
 
     def __str__(self):
-        return f"temp"
+        return "temp"

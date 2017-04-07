@@ -18,7 +18,7 @@ def main():
                 for model in [FeedForward(config), SimpleRnn(config), Lstm(config), Gru(config=config)]:
                     print()
                     print()
-                    print(f">>>> {model} + {ts} (epochs={epochs}, topology={topology})")
+                    print(">>>> {} + {} (epochs={}, topology={})".format(model, ts, epochs, topology))
                     scenario = Scenario(model=model, config=config)
                     scenario.execute()
 

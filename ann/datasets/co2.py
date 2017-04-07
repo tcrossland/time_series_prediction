@@ -14,5 +14,5 @@ class CO2(TimeSeries):
         return self.dataset
 
     def __str__(self):
-        return f"co2"
+        return "co2"
 

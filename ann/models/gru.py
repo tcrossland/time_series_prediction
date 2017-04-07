@@ -26,4 +26,4 @@ class Gru(BaseConfiguration):
         self.model.summary()
 
     def __str__(self):
-        return f"gru-{self.topology}"
+        return "gru-{}".format(self.topology)

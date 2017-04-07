@@ -26,4 +26,4 @@ class SimpleRnn(BaseConfiguration):
         self.model.summary()
 
     def __str__(self):
-        return f"simplernn-{self.topology}"
+        return "simplernn-{}".format(self.topology)

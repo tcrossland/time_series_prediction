@@ -26,4 +26,4 @@ class Lstm(BaseConfiguration):
         self.model.summary()
 
     def __str__(self):
-        return f"lstm-{self.topology}"
+        return "lstm-{}".format(self.topology)
