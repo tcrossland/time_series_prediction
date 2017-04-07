@@ -4,7 +4,7 @@ from .base import TimeSeries
 from sklearn.preprocessing import Imputer
 
 class Temperature(TimeSeries):
-    def __init__(self, filepath='../data/station.csv'):
+    def __init__(self, filepath='data/station.csv'):
         TimeSeries.__init__(self)
         dataframe = pd.read_csv(filepath, usecols=range(1,13), engine='python', skiprows=0)
         imp = Imputer(missing_values=999.90)

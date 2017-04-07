@@ -59,7 +59,7 @@ class Scenario:
         for plot in [self.dataset, self.create_left_plot(train_predict), self.create_right_plot(test_predict)]:
             plt.plot(plot)
 
-        filename = "../out/{}/{}-{}.png".format(self.time_series, self.model, self.config)
+        filename = "out/{}/{}-{}.png".format(self.time_series, self.model, self.config)
 
         plt.savefig(filename)
         plt.close()
