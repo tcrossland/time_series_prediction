@@ -51,7 +51,7 @@ def main():
             topo = '-'.join([str(i) for i in config.topology])
             models = [FeedForward(config), SimpleRnn(config), Gru(config), Lstm(config)]
             scenarios = list(map(lambda m: Scenario(model=m, config=config), models))
-            for epochs in range(1, 20):
+            for epochs in range(1, 11):
                 predictions = list(map(lambda s: (s.execute(1), str(s.model)), scenarios))
                 filename = "out/{}/{}-{}-e{}.png".format(ts, topo, config, epochs)
                 plt.figure(figsize=(16, 12))
