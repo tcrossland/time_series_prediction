@@ -34,13 +34,9 @@ class BaseConfiguration:
         return x
 
     def evaluate(self):
-        [train_x, test_x] = np.array_split(self.x, [self.train_size])
-        [train_y, test_y] = np.array_split(self.y, [self.train_size])
-        train_predict = Prediction(self, self.reshape(train_x), train_y)
-        test_predict = Prediction(self, self.reshape(test_x), test_y)
-        print('Train Score: %.6f RMSE' % train_predict.score)
-        print('Test Score: %.6f RMSE' % test_predict.score)
-        return train_predict, test_predict
+        pred = Prediction(self, self.reshape(self.x), self.y)
+        print('Score: %.6f RMSE' % pred.score)
+        return pred.plot
 
     def predict_future(self):
         [_train_x, test_x] = np.array_split(self.reshape(self.x), [self.train_size])

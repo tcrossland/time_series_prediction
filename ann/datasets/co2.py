@@ -1,4 +1,5 @@
 import pandas
+import matplotlib.pyplot as plt
 import numpy as np
 from .base import TimeSeries
 
@@ -13,6 +14,9 @@ class CO2(TimeSeries):
     def data(self):
         return self.dataset
 
+    def window(self):
+        plt.xlim(self.dataset.size * 0.6, self.dataset.size * 0.8)
+        plt.ylim(350, 390)
+
     def __str__(self):
         return "co2"
-

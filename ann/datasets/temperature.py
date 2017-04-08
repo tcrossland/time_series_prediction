@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
 from .base import TimeSeries
 from sklearn.preprocessing import Imputer
@@ -15,6 +16,10 @@ class Temperature(TimeSeries):
 
     def data(self):
         return self.dataset
+
+    def window(self):
+        plt.xlim(self.dataset.size * 0.6, self.dataset.size * 0.8)
+        plt.ylim(0, 30)
 
     def __str__(self):
         return "temp"
