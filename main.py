@@ -47,8 +47,11 @@ def main():
                       [16, 16, 16], [32, 32, 32], [64, 64, 64], [128, 128, 128]]
 
         for topology in topologies:
-            time_series = [Bbva()]
+            time_series = [Bbva(), CO2(), Temperature()]
             for ts in time_series:
+                # fix random seed for reproducibility
+                np.random.seed(7)
+                
                 config = Config(time_series=ts, look_back=window_size, topology=topology, batch_size=1)
                 topo = '-'.join([str(i) for i in config.topology])
                 models = [FeedForward(config), SimpleRnn(config), Gru(config), Lstm(config)]
