@@ -1,9 +1,11 @@
 import math
-import numpy as np
-from .prediction import Prediction
 from collections import deque
+
+import numpy as np
 from keras.models import Sequential
 from sklearn.metrics import mean_squared_error
+
+from .prediction import Prediction
 
 
 class BaseConfiguration:

@@ -1,6 +1,7 @@
-from .base import BaseConfiguration
 from keras.layers import Dense
 from keras.layers import SimpleRNN
+
+from .base import BaseConfiguration
 
 
 class SimpleRnn(BaseConfiguration):

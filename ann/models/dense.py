@@ -1,19 +1,22 @@
-from .base import BaseConfiguration
-from keras.layers import Dense
-from ann.scenario import Config
 import numpy as np
+from keras.layers import Dense
+
+from ann.scenario import Config
+from .base import BaseConfiguration
 
 
 class FeedForward(BaseConfiguration):
     def __init__(self, config: Config):
         super().__init__(config)
+        activation = config.activation
+        activation = 'relu'
 
         # First layer - input shape should be specified
-        self.model.add(Dense(config.topology[0], input_dim=config.look_back, activation=config.activation))
+        self.model.add(Dense(config.topology[0], input_dim=config.look_back, activation=activation))
 
         # No need to specify shape on intermediate layers
         for num_cells in config.topology[1:]:
-            self.model.add(Dense(num_cells, activation=config.activation))
+            self.model.add(Dense(num_cells, activation=activation))
 
         self.model.add(Dense(1))
         self.model.compile(loss='mean_squared_error', optimizer=config.optimizer)
