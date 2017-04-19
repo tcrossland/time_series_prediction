@@ -4,7 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 class TimeSeries:
-    def __init__(self, feature_range=(0.05, 0.95)):
+    def __init__(self, feature_range: tuple = (0, 1)):
         self.feature_range = feature_range
         self.scaler = MinMaxScaler(feature_range=feature_range)
         self.dataset = []

@@ -7,8 +7,8 @@ from .base import TimeSeries
 
 
 class Temperature(TimeSeries):
-    def __init__(self, filepath='data/station.csv'):
-        TimeSeries.__init__(self)
+    def __init__(self, filepath='data/station.csv', feature_range=(0.05, 0.95)):
+        TimeSeries.__init__(self, feature_range=feature_range)
         dataframe = pd.read_csv(filepath, usecols=range(1, 13), engine='python', skiprows=0)
         imp = Imputer(missing_values=999.90)
         imp.fit(dataframe)

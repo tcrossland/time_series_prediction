@@ -1,12 +1,13 @@
-import pandas
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas
+
 from .base import TimeSeries
 
 
 class Bbva(TimeSeries):
-    def __init__(self, filepath='data/bbva.csv'):
-        TimeSeries.__init__(self)
+    def __init__(self, filepath='data/bbva.csv', feature_range=(0.05, 0.95)):
+        TimeSeries.__init__(self, feature_range=feature_range)
         dataframe = pandas.read_csv(filepath, usecols=[3], engine='python')
         dataframe = dataframe.iloc[::-1]
         dataset = dataframe.values.reshape((np.prod(dataframe.shape), 1))
