@@ -1,13 +1,15 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from .base import TimeSeries
+import pandas as pd
 from sklearn.preprocessing import Imputer
+
+from .base import TimeSeries
+
 
 class Temperature(TimeSeries):
     def __init__(self, filepath='data/station.csv'):
         TimeSeries.__init__(self)
-        dataframe = pd.read_csv(filepath, usecols=range(1,13), engine='python', skiprows=0)
+        dataframe = pd.read_csv(filepath, usecols=range(1, 13), engine='python', skiprows=0)
         imp = Imputer(missing_values=999.90)
         imp.fit(dataframe)
         dataset = imp.transform(dataframe)
