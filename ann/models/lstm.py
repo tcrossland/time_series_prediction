@@ -1,6 +1,7 @@
-from .base import BaseConfiguration
 from keras.layers import Dense
 from keras.layers import LSTM
+
+from .base import BaseConfiguration
 
 
 class Lstm(BaseConfiguration):

@@ -27,8 +27,8 @@ class BaseConfiguration:
         return self.model.fit(x, self.y, epochs=epochs, batch_size=batch_size,
                               validation_split=self.validation_split, shuffle=False, verbose=2)
 
-    def predict(self, inputs):
-        return self.model.predict(inputs)
+    def predict(self, inputs, batch_size=1):
+        return self.model.predict(inputs, batch_size=batch_size)
 
     def reshape(self, x):
         return x
