@@ -15,11 +15,23 @@ class TimeSeries:
     def unscaled(self, dataset):
         return self.scaler.inverse_transform(dataset)
 
+    def create_indexed_dataset(self, look_back=1, index_feature_range=(0.05, 0.95)):
+        scaler = MinMaxScaler(feature_range=index_feature_range)
+        dataset = self.scaled()
+        x = [dataset[i:i + look_back] for i in range(0, len(dataset) - look_back)]
+        y = [dataset[i] for i in range(look_back, len(dataset))]
+        n = len(y)
+        t = np.fromiter(range(n), np.float64).reshape((n, 1))
+        t = scaler.fit_transform(t)
+        x = np.array(x)
+        x = x.reshape((x.shape[0], x.shape[1]))
+        return np.hstack((t, x)).reshape((n, look_back + 1, 1)), np.array(y)
+
     def create_dataset(self, look_back=1):
         dataset = self.scaled()
-        dataX = [dataset[i:i + look_back] for i in range(0, len(dataset) - look_back)]
-        dataY = [dataset[i] for i in range(look_back, len(dataset))]
-        return np.array(dataX), np.array(dataY)
+        x = [dataset[i:i + look_back] for i in range(0, len(dataset) - look_back)]
+        y = [dataset[i] for i in range(look_back, len(dataset))]
+        return np.array(x), np.array(y)
 
     def plot(self, filepath=None, title=None, x_min: int = 0, x_max: int = None):
         if x_max is None:
