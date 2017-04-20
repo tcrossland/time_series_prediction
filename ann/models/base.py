@@ -2,32 +2,43 @@ import math
 from collections import deque
 
 import numpy as np
+from keras.callbacks import CSVLogger, ReduceLROnPlateau, EarlyStopping
 from keras.models import Sequential
 from sklearn.metrics import mean_squared_error
 
+from ann.models.callbacks import CustomCallback
 from .prediction import Prediction
 
 
 class BaseConfiguration:
-    def __init__(self, config, validation_split=0.3, activation='tanh', optimizer='adam'):
+    def __init__(self, config, validation_split=0.3, activation='tanh', optimizer='nadam'):
+        np.random.seed(7)
+
         self.ts = config.time_series
-        self.x, self.y = self.ts.create_dataset(look_back=config.look_back)
+        if config.include_index:
+            self.x, self.y = self.ts.create_indexed_dataset(look_back=config.look_back)
+        else:
+            self.x, self.y = self.ts.create_dataset(look_back=config.look_back)
         self.activation = activation
         self.optimizer = optimizer
-        self.look_back = config.look_back
+        self.config = config
         self.validation_split = validation_split
         self.train_size = int(len(self.x) * (1.0 - validation_split))
         self.test_size = len(self.x) - self.train_size
         self.model = Sequential()
         self.topology = '-'.join([str(i) for i in config.topology])
+        self.shuffle = True
 
     def summary(self):
         self.model.summary()
 
     def train(self, epochs=10, batch_size=1):
+        custom = CustomCallback(filename='out-%s-%s.log' % (self.__class__.__name__, str(self.ts)), scenario=self)
+        early_stop = EarlyStopping(patience=10, verbose=1)
+        # reduce_lr = ReduceLROnPlateau(factor=0.9, patience=8, verbose=1, cooldown=4, epsilon=0)
         x = self.reshape(self.x)
-        return self.model.fit(x, self.y, epochs=epochs, batch_size=batch_size,
-                              validation_split=self.validation_split, shuffle=False, verbose=2)
+        return self.model.fit(x, self.y, epochs=epochs, batch_size=batch_size, validation_split=self.validation_split,
+                              shuffle=self.shuffle, verbose=0, callbacks=[early_stop, custom])
 
     def predict(self, inputs, batch_size=1):
         return self.model.predict(inputs, batch_size=batch_size)
@@ -53,8 +64,8 @@ class BaseConfiguration:
         for i in range(self.test_size - 1):
             dq.popleft()
             dq.append(latest_prediction)
-            future_x = np.reshape(dq, (1, self.look_back, 1))
-            future_xs = np.reshape(np.append(future_xs, future_x), (i + 1, self.look_back, 1))
+            future_x = np.reshape(dq, (1, self.config.look_back, 1))
+            future_xs = np.reshape(np.append(future_xs, future_x), (i + 1, self.config.look_back, 1))
             latest_prediction = self.predict(future_xs)[-1][0]
             fut_predict.append(latest_prediction)
 

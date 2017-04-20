@@ -7,6 +7,7 @@ from .base import BaseConfiguration
 class Lstm(BaseConfiguration):
     def __init__(self, config):
         super().__init__(config)
+        self.shuffle = False
 
         # First layer - input shape should be specified
         self.model.add(

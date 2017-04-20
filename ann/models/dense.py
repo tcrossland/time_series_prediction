@@ -9,10 +9,12 @@ class FeedForward(BaseConfiguration):
     def __init__(self, config: Config):
         super().__init__(config)
         activation = config.activation
-        activation = 'relu'
+        input_dim = config.look_back
+        if config.include_index:
+            input_dim += 1
 
         # First layer - input shape should be specified
-        self.model.add(Dense(config.topology[0], input_dim=config.look_back, activation=activation))
+        self.model.add(Dense(config.topology[0], input_dim=input_dim, activation=activation))
 
         # No need to specify shape on intermediate layers
         for num_cells in config.topology[1:]:
